@@ -3,7 +3,6 @@
 #
 # R Bloggers Article
 # https://www.r-bloggers.com/classification-on-the-german-credit-database/
-#
 
 # install.packages("AppliedPredictiveModeling")
 # install.packages("caret")
@@ -13,6 +12,7 @@
 
 library(caret)
 data(GermanCredit)
+head(GermanCredit)
 set.seed(1056)
 
 GermanCredit <- GermanCredit[, -nearZeroVar(GermanCredit)]
@@ -39,13 +39,13 @@ registerDoMC(4)
  
 set.seed(1056)
 svmFit <- train(Class ~ .,
-                 data = GermanCreditTrain,
-                 method = "svmRadial",
-                 preProc = c("center", "scale"),
-                 tuneGrid = svmTuneGrid,
-                 trControl = trainControl(method = "repeatedcv", 
-                 repeats = 5,
-                 classProbs = TRUE))
+                data = GermanCreditTrain,
+                method = "svmRadial",
+                preProc = c("center", "scale"),
+                tuneGrid = svmTuneGrid,
+                trControl = trainControl(method = "repeatedcv", 
+                repeats = 5,
+                classProbs = TRUE))
 
 svmFit
  
@@ -59,35 +59,35 @@ head(predictedProbs)
 
 # set.seed(1056)
 # svmFit10CV <- train(Class ~ .,
+#                     data = GermanCreditTrain,
+#                     method = "svmRadial",
+#                     preProc = c("center", "scale"),
+#                     tuneGrid = svmTuneGrid,
+#                     trControl = trainControl(method = "cv", 
+#                     number = 10))
+#
+# svmFit10CV
+
+# set.seed(1056)
+# svmFitLOO <- train(Class ~ .,
 #                    data = GermanCreditTrain,
 #                    method = "svmRadial",
 #                    preProc = c("center", "scale"),
 #                    tuneGrid = svmTuneGrid,
-#                    trControl = trainControl(method = "cv", 
-#                    number = 10))
-#
-# svmFit10CV
-#
-# set.seed(1056)
-# svmFitLOO <- train(Class ~ .,
-#                  data = GermanCreditTrain,
-#                   method = "svmRadial",
-#                   preProc = c("center", "scale"),
-#                   tuneGrid = svmTuneGrid,
-#                   trControl = trainControl(method = "LOOCV"))
+#                    trControl = trainControl(method = "LOOCV"))
 # svmFitLOO
-#
+
 # set.seed(1056)
 # svmFitLGO <- train(Class ~ .,
-#                   data = GermanCreditTrain,
-#                   method = "svmRadial",
-#                   preProc = c("center", "scale"),
-#                   tuneGrid = svmTuneGrid,
-#                   trControl = trainControl(method = "LGOCV", 
-#                   number = 50, 
-#                   p = .8))
+#                    data = GermanCreditTrain,
+#                    method = "svmRadial",
+#                    preProc = c("center", "scale"),
+#                    tuneGrid = svmTuneGrid,
+#                    trControl = trainControl(method = "LGOCV", 
+#                    number = 50, 
+#                    p = .8))
 # svmFitLGO
-# 
+ 
 # set.seed(1056)
 # svmFitBoot <- train(Class ~ .,
 #                     data = GermanCreditTrain,
@@ -96,15 +96,15 @@ head(predictedProbs)
 #                     tuneGrid = svmTuneGrid,
 #                     trControl = trainControl(method = "boot", number = 50))
 # svmFitBoot
-#
+
 # set.seed(1056)
 # svmFitBoot632 <- train(Class ~ .,
-#                       data = GermanCreditTrain,
-#                       method = "svmRadial",
-#                       preProc = c("center", "scale"),
-#                       tuneGrid = svmTuneGrid,
-#                       trControl = trainControl(method = "boot632", 
-#                       number = 50))
+#                        data = GermanCreditTrain,
+#                        method = "svmRadial",
+#                        preProc = c("center", "scale"),
+#                        tuneGrid = svmTuneGrid,
+#                        trControl = trainControl(method = "boot632", 
+#                        number = 50))
 # svmFitBoot632
 
 set.seed(1056)
@@ -121,7 +121,7 @@ summary(resamp)
 modelDifferences <- diff(resamp)
 summary(modelDifferences)
 
-modelDifferences$statistics$Accuracy$SVM.diff.Logistic
+modelDifferences$statistics$Accuracy$SVM.diff.Logistic 
 
 # sessionInfo()
 # q("no")
