@@ -1,3 +1,4 @@
+# March 5, 2019
 # AppliedPredictiveModeling, March 2019
 # https://github.com/cran/AppliedPredictiveModeling/blob/master/inst/chapters/04_Over_Fitting.Rout
 #
@@ -24,6 +25,11 @@ GermanCredit$Personal.Male.Married.Widowed <- NULL
 GermanCredit$Property.Unknown <- NULL
 GermanCredit$Housing.ForFree <- NULL
 
+# March 10, 2019 
+setwd("C:/Users/Carlos/OneDrive/DS/2019 APM SVM German Credit")
+getwd()
+write.csv(GermanCredit, file = "GermanCredit.csv")
+
 set.seed(100)
 inTrain <- createDataPartition(GermanCredit$Class, p = .8)[[1]]
 GermanCreditTrain <- GermanCredit[ inTrain, ]
@@ -37,6 +43,7 @@ svmTuneGrid <- data.frame(sigma = as.vector(sigDist)[1], C = 2^(-2:7))
 library(doMC)
 registerDoMC(4)
  
+cat("\n\n Training SVM\n\n")
 set.seed(1056)
 svmFit <- train(Class ~ .,
                 data = GermanCreditTrain,
@@ -51,6 +58,7 @@ svmFit
  
 plot(svmFit, scales = list(x = list(log = 2)))
 
+cat("\n\n Running predict...\n\n")
 predictedClasses <- predict(svmFit, GermanCreditTest)
 str(predictedClasses)
 
@@ -106,6 +114,8 @@ head(predictedProbs)
 #                        trControl = trainControl(method = "boot632", 
 #                        number = 50))
 # svmFitBoot632
+
+cat("\n\n Training Logistic Regression model\n\n")
 
 set.seed(1056)
 glmProfile <- train(Class ~ .,
