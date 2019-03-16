@@ -1,0 +1,5 @@
+Code taken from R-Bloggers article
+
+GermanCredit.R: elaborated from the book Applied Predictive Modeling - SSVM to GLM comparisson
+
+GermanCreditBenchmark.R: benchmark between rpart, glm and rf
