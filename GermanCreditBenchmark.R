@@ -1,3 +1,4 @@
+# March 16, 2019
 # https://www.r-bloggers.com/classification-on-the-german-credit-database/
 
 url="http://freakonometrics.free.fr/german_credit.csv"
@@ -24,9 +25,9 @@ LogisticModel <- glm(Creditability ~ Account.Balance +
 fitLog <- predict(LogisticModel,type="response", newdata=credit[i_test,])
 
 library(ROCR)
-pred = prediction( fitLog, credit$Creditability[i_test])
+pred = prediction(fitLog, credit$Creditability[i_test])
 perf <- performance(pred, "tpr", "fpr")
-plot(perf)
+plot(perf, main="Logistic Regression - 5 predictors")
 AUCLog1=performance(pred, measure = "auc")@y.values[[1]]
 cat("AUC: ",AUCLog1,"n")
 
@@ -40,7 +41,7 @@ fitLog <- predict(LogisticModel, type="response", newdata=credit[i_test,])
 
 pred = prediction( fitLog, credit$Creditability[i_test])
 perf <- performance(pred, "tpr", "fpr")
-plot(perf)
+plot(perf, main="Logistic Regression - All Predictors")
 AUCLog2=performance(pred, measure = "auc")@y.values[[1]]
 cat("AUC: ",AUCLog2,"n")
 
@@ -59,16 +60,16 @@ prp(ArbreModel,type=2,extra=1)
 fitArbre <- predict(ArbreModel, newdata=credit[i_test,], type="prob")[,2]
 pred = prediction( fitArbre, credit$Creditability[i_test])
 perf <- performance(pred, "tpr", "fpr")
-plot(perf)
+plot(perf, main="Decision tree - rpart")
 AUCArbre=performance(pred, measure = "auc")@y.values[[1]]
 cat("AUC: ",AUCArbre,"n")
 
 library(randomForest)
 RF <- randomForest(Creditability ~ ., data = credit[i_calibration,])
 fitForet <- predict(RF, newdata=credit[i_test,], type="prob")[,2]
-pred = prediction( fitForet, credit$Creditability[i_test])
+pred = prediction(fitForet, credit$Creditability[i_test])
 perf <- performance(pred, "tpr", "fpr")
-plot(perf)
+plot(perf, main="Random Forest")
 AUCRF=performance(pred, measure = "auc")@y.values[[1]]
 cat("AUC: ",AUCRF,"n")
 
@@ -90,5 +91,7 @@ AUC = function(i){
       return(c(AUCLog2,AUCRF))
 }
 
-A=Vectorize(AUC)(1:20)
-plot(t(A))
+A=Vectorize(AUC)(1:50)
+plot(t(A), main="Logistic vs Random Forest")
+
+cat("  Finished\n\n")
